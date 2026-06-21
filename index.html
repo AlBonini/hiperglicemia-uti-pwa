@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5E35B1">
+<title>Insulina EV Hiperglicemia - UTI</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <h1>Insulina EV Hiperglicemia - UTI</h1>
+  <p>Infusao continua de insulina regular 1 UI/mL (mL/h = UI/h) - Santa Casa de Tatui</p>
+</header>
+
+<nav class="tabs" id="tabs"></nav>
+
+<main>
+  <div class="cartao">
+    <div class="topo-acoes">
+      <span id="ultimoHorario">Ult: --:--</span>
+      <span id="alertaAtraso" class="alerta-atraso"></span>
+      <span class="direita">
+        <button class="btn-pdf" id="btnRelatorio">RELATORIO</button>
+        <button class="btn-reset" id="btnNovo">NOVO</button>
+      </span>
+    </div>
+
+    <label for="campoNome">Nome</label>
+    <input type="text" id="campoNome" maxlength="40">
+
+    <div class="linha2">
+      <div>
+        <label for="campoIdade">Idade</label>
+        <input type="number" id="campoIdade" min="0" max="120">
+      </div>
+      <div>
+        <label for="campoHba1c">HbA1c admissao (%)</label>
+        <input type="number" id="campoHba1c" step="0.1" min="0" max="20">
+      </div>
+    </div>
+
+    <label for="campoGlicGatilho">Glicemia na admissao (gatilho)</label>
+    <input type="number" id="campoGlicGatilho" min="0">
+
+    <div class="caixa-aviso">
+      <label><input type="checkbox" id="campoBgConfirmado"> Glicemia &gt;180 confirmada em 2 medidas?</label>
+      <label><input type="checkbox" id="campoNaoCadEhh"> Paciente NAO esta em CAD/EHH?</label>
+    </div>
+
+    <div class="titulo-secao">Glicemias (mg/dL)</div>
+    <div class="linha2">
+      <div>
+        <label for="campoGlicPrev">Anterior</label>
+        <input type="number" id="campoGlicPrev" min="0">
+      </div>
+      <div>
+        <label for="campoGlicNow">Atual</label>
+        <input type="number" id="campoGlicNow" min="0">
+      </div>
+    </div>
+
+    <div class="linha2">
+      <div>
+        <label for="campoHoras">Intervalo (h) - vazio=usa Freq.</label>
+        <input type="number" id="campoHoras" step="0.1" min="0">
+      </div>
+      <div>
+        <label>Freq. monitorizacao</label>
+        <div class="freq-opcoes">
+          <label><input type="radio" name="freq" value="1" checked> 1h</label>
+          <label><input type="radio" name="freq" value="2"> 2h</label>
+          <label><input type="radio" name="freq" value="4"> 4h</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="titulo-secao">Opcionais</div>
+    <div class="linha2">
+      <div>
+        <label for="campoK">K+ atual (mEq/L)</label>
+        <input type="number" id="campoK" step="0.1" min="0">
+      </div>
+      <div class="chk-inline" style="margin-top: 22px;">
+        <input type="checkbox" id="campoSintomatico">
+        <label for="campoSintomatico" style="margin:0;">Sintomatico (hipo 75-99)?</label>
+      </div>
+    </div>
+
+    <div class="titulo-secao">Bomba - Insulina Regular 1 UI/mL (mL/h = UI/h)</div>
+    <div class="linha2">
+      <div>
+        <label for="campoTaxa">Taxa atual (UI/h)</label>
+        <input type="text" id="campoTaxa" class="destaque">
+      </div>
+      <div>
+        <label for="campoTotalInfundido">Total infundido (UI)</label>
+        <input type="number" id="campoTotalInfundido" min="0">
+      </div>
+    </div>
+
+    <div class="botoes">
+      <button class="btn-calcular" id="btnCalcular">CALCULAR</button>
+      <div class="linha-dupla">
+        <button class="btn-pausar" id="btnPausar">PAUSAR</button>
+        <button class="btn-retomar" id="btnRetomar">RETOMAR A INFUSAO</button>
+      </div>
+      <div class="linha-dupla">
+        <button class="btn-nutricao" id="btnNutricao">NUTRICAO SUSPENSA (-50%)</button>
+        <button class="btn-desfazer" id="btnDesfazer">DESFAZER</button>
+      </div>
+    </div>
+
+    <div class="painel-resultado">
+      <div class="rotulo">Conduta</div>
+      <div class="acao" id="resAcao">---</div>
+      <div class="delta-info" id="resDelta">---</div>
+      <div class="vazao" id="resVazao">---</div>
+    </div>
+  </div>
+
+  <p class="disclaimer">
+    Ferramenta de apoio a decisao clinica (POP-UTI-END-001, v1.0 - Santa Casa de Tatui). A responsabilidade da
+    prescricao e do medico assistente. NAO usar em Cetoacidose Diabetica/Estado Hiperglicemico Hiperosmolar.<br>
+    Baseado nas diretrizes SCCM 2024 (DOI: 10.1097/CCM.0000000000006174), Surviving Sepsis Campaign e AMIB.<br>
+    Copyright 2026 albonini
+  </p>
+</main>
+
+<div id="toast-container"></div>
+
+<div id="relatorio-overlay" class="hidden">
+  <div class="relatorio-topo">
+    <h2 id="relatorioTitulo">Relatorio</h2>
+    <div>
+      <button onclick="window.print()">IMPRIMIR / SALVAR PDF</button>
+      <button class="fechar" id="btnFecharRelatorio">FECHAR</button>
+    </div>
+  </div>
+  <div id="relatorioConteudo"></div>
+</div>
+
+<script src="protocolo.js"></script>
+<script src="db.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

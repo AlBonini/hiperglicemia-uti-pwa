@@ -1,0 +1,19 @@
+{
+  "name": "Insulina EV Hiperglicemia - UTI",
+  "short_name": "Hiperglicemia UTI",
+  "description": "Calculadora de infusao de insulina regular EV (1 UI/mL) para controle da hiperglicemia no paciente critico - protocolo Santa Casa de Tatui",
+  "id": "/hiperglicemia-uti",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#F3F0FA",
+  "theme_color": "#5E35B1",
+  "lang": "pt-BR",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

@@ -1,0 +1,352 @@
+:root {
+  --cor-fundo: #F3F0FA;
+  --cor-primaria: #5E35B1;
+  --cor-primaria-escura: #4527A0;
+  --cor-campo-destaque: #EDE7F6;
+  --cor-aviso-fundo: #FFF3E0;
+  --cor-aviso-texto: #E65100;
+  --cor-resultado-fundo: #EDE7F6;
+  --cor-resultado-vazao: #00796B;
+  --cor-perigo: #d32f2f;
+  --cor-sucesso: #388e3c;
+  --cor-alerta: #ff8c00;
+  --cor-neutro: #757575;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--cor-fundo);
+  color: #222;
+  padding-bottom: 24px;
+}
+
+.topbar {
+  background: var(--cor-primaria);
+  color: #fff;
+  padding: 14px 16px 10px;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: bold;
+}
+
+.topbar p {
+  margin: 2px 0 0;
+  font-size: 0.72rem;
+  opacity: 0.9;
+}
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  background: var(--cor-primaria-escura);
+  padding: 6px 8px;
+  position: sticky;
+  top: 56px;
+  z-index: 4;
+}
+
+.tabs button {
+  flex: 0 0 auto;
+  border: none;
+  border-radius: 8px 8px 0 0;
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  background: var(--cor-campo-destaque);
+  color: var(--cor-primaria-escura);
+  cursor: pointer;
+}
+
+.tabs button.ativo {
+  background: var(--cor-primaria);
+  color: #fff;
+}
+
+main {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 12px;
+}
+
+.cartao {
+  background: #fff;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.topo-acoes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 0.75rem;
+  color: #555;
+}
+
+.topo-acoes .direita {
+  display: flex;
+  gap: 6px;
+}
+
+.topo-acoes button {
+  font-size: 0.72rem;
+  padding: 5px 8px;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.btn-pdf { background: var(--cor-primaria-escura); }
+.btn-reset { background: #c62828; }
+
+.alerta-atraso {
+  color: var(--cor-perigo);
+  font-weight: bold;
+}
+
+label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: bold;
+  margin: 8px 0 3px;
+  color: #444;
+}
+
+input[type="text"], input[type="number"] {
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+input.destaque {
+  background: var(--cor-campo-destaque);
+  font-weight: bold;
+}
+
+.linha2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.caixa-aviso {
+  background: var(--cor-aviso-fundo);
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin: 10px 0;
+}
+
+.caixa-aviso label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--cor-aviso-texto);
+  font-weight: bold;
+  margin: 4px 0;
+}
+
+.caixa-aviso input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}
+
+.titulo-secao {
+  color: var(--cor-primaria);
+  font-size: 0.95rem;
+  font-weight: bold;
+  margin: 14px 0 4px;
+  border-bottom: 1px solid var(--cor-campo-destaque);
+  padding-bottom: 4px;
+}
+
+.freq-opcoes {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 0.85rem;
+  font-weight: normal;
+  margin-top: 4px;
+}
+
+.freq-opcoes label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: normal;
+  margin: 0;
+  color: #333;
+}
+
+.chk-inline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: normal;
+  margin-top: 8px;
+  font-size: 0.85rem;
+}
+
+.chk-inline input { width: 18px; height: 18px; }
+
+.botoes button {
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: #fff;
+  margin-top: 6px;
+  cursor: pointer;
+}
+
+.btn-calcular { background: var(--cor-primaria); font-size: 1.05rem; padding: 14px; }
+
+.botoes button:disabled {
+  background: #bbb;
+  color: #eee;
+  cursor: not-allowed;
+}
+.btn-pausar { background: var(--cor-perigo); }
+.btn-retomar { background: var(--cor-sucesso); }
+.btn-nutricao { background: var(--cor-alerta); }
+.btn-desfazer { background: var(--cor-neutro); }
+.btn-relatorio { background: var(--cor-primaria-escura); }
+
+.linha-dupla {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.painel-resultado {
+  background: var(--cor-resultado-fundo);
+  border-radius: 10px;
+  padding: 12px;
+  margin-top: 12px;
+  text-align: center;
+}
+
+.painel-resultado .rotulo {
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.painel-resultado .acao {
+  font-weight: bold;
+  font-size: 0.88rem;
+  margin: 4px 0 8px;
+  color: var(--cor-primaria);
+}
+
+.painel-resultado .delta-info {
+  font-size: 0.72rem;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.painel-resultado .vazao {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--cor-resultado-vazao);
+}
+
+.disclaimer {
+  font-size: 0.62rem;
+  color: #888;
+  text-align: center;
+  margin-top: 14px;
+  line-height: 1.4;
+}
+
+#toast-container {
+  position: fixed;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  width: min(420px, 92vw);
+}
+
+.toast {
+  background: #333;
+  color: #fff;
+  padding: 12px 14px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+  white-space: pre-line;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+.toast.erro { background: var(--cor-perigo); }
+.toast.aviso { background: var(--cor-alerta); }
+.toast.info { background: var(--cor-primaria-escura); }
+.toast.sucesso { background: var(--cor-sucesso); }
+
+.hidden { display: none !important; }
+
+#relatorio-overlay {
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  z-index: 40;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+#relatorio-overlay table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+  margin-top: 10px;
+}
+
+#relatorio-overlay th, #relatorio-overlay td {
+  border: 1px solid #ccc;
+  padding: 6px;
+  text-align: left;
+}
+
+#relatorio-overlay th {
+  background: #eee;
+}
+
+.relatorio-topo {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.relatorio-topo button {
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  color: #fff;
+  background: var(--cor-primaria);
+  font-weight: bold;
+}
+
+@media print {
+  .topbar, .tabs, #toast-container, .relatorio-topo button.fechar { display: none !important; }
+  #relatorio-overlay { position: static; }
+}
