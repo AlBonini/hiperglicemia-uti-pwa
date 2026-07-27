@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5E35B1">
+<title>Passagem de Plantao - UTI</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <h1>Passagem de Plantao - UTI (10 leitos)</h1>
+  <p>Quadro de leito para passagem de plantao - Santa Casa de Tatui - <a class="link-topo" href="index.html">Calculadora de Insulina</a></p>
+</header>
+
+<nav class="tabs" id="tabs"></nav>
+
+<main>
+  <div class="cartao">
+    <div class="topo-acoes">
+      <span id="leitoTitulo">Leito 1</span>
+      <span class="direita">
+        <button class="btn-pdf" id="btnRelatorio">CENSO / IMPRIMIR</button>
+        <button class="btn-reset" id="btnNovo">LIMPAR LEITO</button>
+      </span>
+    </div>
+
+    <div class="titulo-secao">Identificacao</div>
+    <div class="linha2">
+      <div>
+        <label for="campoNome">Paciente</label>
+        <input type="text" id="campoNome" maxlength="60">
+      </div>
+      <div>
+        <label for="campoIdade">Idade</label>
+        <input type="number" id="campoIdade" min="0" max="120">
+      </div>
+    </div>
+
+    <div class="linha2">
+      <div>
+        <label for="campoAdmHosp">Adm. hospitalar</label>
+        <input type="date" id="campoAdmHosp">
+      </div>
+      <div>
+        <label for="campoAdmUti">Adm. UTI</label>
+        <input type="date" id="campoAdmUti">
+      </div>
+    </div>
+
+    <div class="linha2">
+      <div>
+        <label for="campoDiasUti">Dias de UTI</label>
+        <input type="number" id="campoDiasUti" min="0">
+      </div>
+      <div>
+        <label for="campoAtendimento">Atendimento</label>
+        <input type="text" id="campoAtendimento" maxlength="30">
+      </div>
+    </div>
+
+    <div class="linha2">
+      <div>
+        <label for="campoProntuario">Prontuario</label>
+        <input type="text" id="campoProntuario" maxlength="20">
+      </div>
+      <div>
+        <label for="campoClinico">Clin. responsavel</label>
+        <input type="text" id="campoClinico" maxlength="40">
+      </div>
+    </div>
+
+    <label for="campoInvestimento">Investimento terapeutico</label>
+    <select id="campoInvestimento">
+      <option value="">-- selecionar --</option>
+      <option value="Pleno">Pleno</option>
+      <option value="Parcial">Parcial (sem RCP/sem escalonar)</option>
+      <option value="Paliativo">Cuidados paliativos exclusivos</option>
+    </select>
+
+    <div class="titulo-secao">Historia clinica</div>
+    <label for="campoMotivo">Motivo da internacao</label>
+    <textarea id="campoMotivo" rows="2"></textarea>
+
+    <label for="campoAntecedentes">Antecedentes</label>
+    <textarea id="campoAntecedentes" rows="2"></textarea>
+
+    <div class="titulo-secao">Antibioticos</div>
+    <div id="listaAntibioticos"></div>
+    <button type="button" class="btn-add" id="btnAddAtb">+ ANTIBIOTICO</button>
+
+    <div class="titulo-secao">Dispositivos e conduta</div>
+    <label for="campoDispositivos">Dispositivos</label>
+    <textarea id="campoDispositivos" rows="2"></textarea>
+
+    <label for="campoCirurgia">Cirurgia</label>
+    <textarea id="campoCirurgia" rows="2"></textarea>
+
+    <label for="campoExames">Exames pendentes</label>
+    <textarea id="campoExames" rows="2"></textarea>
+
+    <label for="campoCulturas">Culturas pendentes</label>
+    <textarea id="campoCulturas" rows="2"></textarea>
+
+    <label for="campoPendencias">Pendencias</label>
+    <textarea id="campoPendencias" rows="3"></textarea>
+  </div>
+
+  <p class="disclaimer">
+    Quadro de leito local (sem backend) - os dados de cada leito ficam salvos apenas neste aparelho (IndexedDB) e
+    nunca saem do dispositivo. Ferramenta de apoio a organizacao da passagem de plantao; a responsabilidade pelas
+    informacoes clinicas e da equipe assistencial.<br>
+    Copyright 2026 albonini
+  </p>
+</main>
+
+<div id="toast-container"></div>
+
+<div id="relatorio-overlay" class="hidden">
+  <div class="relatorio-topo">
+    <h2 id="relatorioTitulo">Censo - Passagem de Plantao</h2>
+    <div>
+      <button onclick="window.print()">IMPRIMIR / SALVAR PDF</button>
+      <button class="fechar" id="btnFecharRelatorio">FECHAR</button>
+    </div>
+  </div>
+  <div id="relatorioConteudo"></div>
+</div>
+
+<script src="db.js"></script>
+<script src="passagem.js"></script>
+</body>
+</html>
