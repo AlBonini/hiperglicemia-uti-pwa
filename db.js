@@ -7,7 +7,7 @@
   'use strict';
 
   var DB_NOME = 'hiperglicemia_uti_db';
-  var DB_VERSAO = 2;
+  var DB_VERSAO = 1;
   var dbPromise = null;
 
   function abrirDb() {
@@ -22,9 +22,6 @@
         if (!db.objectStoreNames.contains('historico')) {
           var store = db.createObjectStore('historico', { keyPath: 'logId', autoIncrement: true });
           store.createIndex('porPaciente', 'idPaciente');
-        }
-        if (!db.objectStoreNames.contains('leitos')) {
-          db.createObjectStore('leitos', { keyPath: 'leito' });
         }
       };
       req.onsuccess = function (ev) { resolve(ev.target.result); };
@@ -111,70 +108,13 @@
     });
   }
 
-  function estadoPadraoLeito(leito) {
-    return {
-      leito: leito,
-      nome: '', idade: '',
-      admHosp: '', admUti: '', diasUti: '',
-      atendimento: '', prontuario: '', clinico: '', investimento: '',
-      motivo: '', antecedentes: '',
-      antibioticos: [],
-      dispositivos: '', cirurgia: '', examesPendentes: '', culturasPendentes: '', pendencias: '',
-    };
-  }
-
-  function salvarLeito(estado) {
-    return abrirDb().then(function (db) {
-      return new Promise(function (resolve, reject) {
-        var tx = db.transaction('leitos', 'readwrite');
-        tx.objectStore('leitos').put(estado);
-        tx.oncomplete = function () { resolve(); };
-        tx.onerror = function () { reject(tx.error); };
-      });
-    });
-  }
-
-  function carregarLeito(leito) {
-    return abrirDb().then(function (db) {
-      return new Promise(function (resolve, reject) {
-        var tx = db.transaction('leitos', 'readonly');
-        var req = tx.objectStore('leitos').get(leito);
-        req.onsuccess = function () { resolve(req.result || estadoPadraoLeito(leito)); };
-        req.onerror = function () { reject(req.error); };
-      });
-    });
-  }
-
-  function apagarLeito(leito) {
-    return abrirDb().then(function (db) {
-      return new Promise(function (resolve, reject) {
-        var tx = db.transaction('leitos', 'readwrite');
-        tx.objectStore('leitos').delete(leito);
-        tx.oncomplete = function () { resolve(); };
-        tx.onerror = function () { reject(tx.error); };
-      });
-    });
-  }
-
-  function listarTodosLeitos() {
-    return abrirDb().then(function (db) {
-      return new Promise(function (resolve, reject) {
-        var tx = db.transaction('leitos', 'readonly');
-        var req = tx.objectStore('leitos').getAll();
-        req.onsuccess = function () { resolve(req.result || []); };
-        req.onerror = function () { reject(req.error); };
-      });
-    });
-  }
-
   function exportarTudo() {
     return abrirDb().then(function (db) {
       return new Promise(function (resolve, reject) {
-        var tx = db.transaction(['pacientes', 'historico', 'leitos'], 'readonly');
-        var saida = { pacientes: [], historico: [], leitos: [], exportadoEm: new Date().toISOString() };
+        var tx = db.transaction(['pacientes', 'historico'], 'readonly');
+        var saida = { pacientes: [], historico: [], exportadoEm: new Date().toISOString() };
         tx.objectStore('pacientes').getAll().onsuccess = function (ev) { saida.pacientes = ev.target.result; };
         tx.objectStore('historico').getAll().onsuccess = function (ev) { saida.historico = ev.target.result; };
-        tx.objectStore('leitos').getAll().onsuccess = function (ev) { saida.leitos = ev.target.result; };
         tx.oncomplete = function () { resolve(saida); };
         tx.onerror = function () { reject(tx.error); };
       });
@@ -184,14 +124,13 @@
   function importarTudo(dados) {
     return abrirDb().then(function (db) {
       return new Promise(function (resolve, reject) {
-        var tx = db.transaction(['pacientes', 'historico', 'leitos'], 'readwrite');
+        var tx = db.transaction(['pacientes', 'historico'], 'readwrite');
         (dados.pacientes || []).forEach(function (p) { tx.objectStore('pacientes').put(p); });
         (dados.historico || []).forEach(function (h) {
           var copia = Object.assign({}, h);
           delete copia.logId;
           tx.objectStore('historico').add(copia);
         });
-        (dados.leitos || []).forEach(function (l) { tx.objectStore('leitos').put(l); });
         tx.oncomplete = function () { resolve(); };
         tx.onerror = function () { reject(tx.error); };
       });
@@ -205,11 +144,6 @@
     apagarPaciente: apagarPaciente,
     adicionarHistorico: adicionarHistorico,
     listarHistorico: listarHistorico,
-    estadoPadraoLeito: estadoPadraoLeito,
-    salvarLeito: salvarLeito,
-    carregarLeito: carregarLeito,
-    apagarLeito: apagarLeito,
-    listarTodosLeitos: listarTodosLeitos,
     exportarTudo: exportarTudo,
     importarTudo: importarTudo,
   };

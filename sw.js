@@ -1,7 +1,7 @@
 // Service worker da PWA de Hiperglicemia UTI - cacheia o app shell para uso offline.
 // Suba a versao do CACHE_NOME sempre que publicar uma atualizacao dos arquivos abaixo,
 // para forcar os clientes a buscar a versao nova em vez de servir o cache antigo.
-var CACHE_NOME = 'hiperglicemia-uti-v2';
+var CACHE_NOME = 'hiperglicemia-uti-v1';
 var ARQUIVOS = [
   './',
   './index.html',
@@ -9,8 +9,6 @@ var ARQUIVOS = [
   './protocolo.js',
   './db.js',
   './app.js',
-  './passagem.html',
-  './passagem.js',
   './manifest.json',
   './icons/icon-192.png',
   './icons/icon-512.png',
