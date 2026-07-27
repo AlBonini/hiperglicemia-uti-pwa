@@ -127,12 +127,65 @@ label {
   color: #444;
 }
 
-input[type="text"], input[type="number"] {
+input[type="text"], input[type="number"], input[type="date"], select, textarea {
   width: 100%;
   padding: 9px 10px;
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 0.95rem;
+  font-family: inherit;
+  background: #fff;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.topbar .link-topo {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.tabs button.ocupado {
+  box-shadow: inset 0 -3px 0 var(--cor-resultado-vazao);
+}
+
+.btn-add {
+  width: 100%;
+  border: 1px dashed var(--cor-primaria);
+  background: #fff;
+  color: var(--cor-primaria);
+  border-radius: 8px;
+  padding: 8px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+.linha-atb {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr auto;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.linha-atb input {
+  font-size: 0.85rem;
+  padding: 7px 6px;
+}
+
+.atb-remover {
+  border: none;
+  background: var(--cor-perigo);
+  color: #fff;
+  border-radius: 6px;
+  width: 30px;
+  height: 34px;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
 }
 
 input.destaque {
@@ -314,8 +367,13 @@ input.destaque {
   padding: 16px;
 }
 
+.tabela-scroll {
+  overflow-x: auto;
+}
+
 #relatorio-overlay table {
   width: 100%;
+  min-width: 720px;
   border-collapse: collapse;
   font-size: 0.78rem;
   margin-top: 10px;
